@@ -1,0 +1,1 @@
+Blocking send mode for stm32 spi data send .
