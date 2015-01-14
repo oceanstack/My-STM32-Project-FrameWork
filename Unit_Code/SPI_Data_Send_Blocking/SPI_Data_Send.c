@@ -42,13 +42,26 @@ void SPI_1_Init(void)
 
 u8 SPI_Send_Data(u8 data)
 {
-    //TODO  should be add timeout check 
+    // timeout check 
+    u16 retrys = 0;
     /* Loop while DR register in not emplty */
-    while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
+    while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET)
+    {
+        if(++retrys >= 300){
+            return 0;
+        }
+
+    }
     /* Send byte through the SPI1 peripheral */
     SPI_I2S_SendData(SPI1, data);
 
-    while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET);
+    while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET)
+    {
+        if(++retrys >= 300){
+            return 0;
+        }
+    }
+
     return (u8)SPI_I2S_ReceiveData(SPI1);
 }
 
