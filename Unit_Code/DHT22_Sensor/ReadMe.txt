@@ -1,0 +1,1 @@
+This is  AM2302/DHT22(Humidity and Temperature Sensor) driver code running on the STM32 , reference  the code  of  Arduino-DHT22-master .
